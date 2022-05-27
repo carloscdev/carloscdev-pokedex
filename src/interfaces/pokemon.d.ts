@@ -1,5 +1,5 @@
 export interface PokemonObject {
-  id: number,
+  id: number | string,
   code: string,
   name: string,
   types: Array<{
@@ -9,14 +9,28 @@ export interface PokemonObject {
       url: string
     }
   }>
-  image: string
+  image: string,
+  weight: number
+  species: PokemonBase
+  abilities: Array<PokemonBase>
+}
+
+export type PokemonBase = {
+  name: string,
+  url: string
+}
+
+export type PokemonAbility = {
+  ability: PokemonBase
 }
 
 export type PokemonType = 'grass'
 
 export interface PokemonContextProps {
-  isLoading: boolean,
-  pokemonList: Array<PokemonObject>,
-  handleGetPokemonList: Function,
-  handleChangePage: Function,
+  isLoading: boolean
+  pokemonItem: PokemonObject
+  pokemonList: Array<PokemonObject>
+  handleGetPokemonList: Function
+  handleGetPokemonById: Function
+  handleChangePage: Function
 }

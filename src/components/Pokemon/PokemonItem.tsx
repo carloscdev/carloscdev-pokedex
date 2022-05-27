@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { PokemonObject } from '../../interfaces/pokemon'
-import { Card, Pokeball } from '../'
+import { Card, Pokeball, Tag } from '../'
 import { POKEMON_TYPE } from '../../utils/constans'
 
 interface PokemonItemProps {
@@ -20,23 +21,24 @@ export const PokemonItem = (props: PokemonItemProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
-    <Card key={pokemonItem.id} color={currentColor} height="h-36">
-      <Pokeball type="white" />
-      <div className="relative">
-        <h4 className="text-lg capitalize">{pokemonItem.name}</h4>
-        <div className="flex justify-between items-center">
-          <ul className="grid gap-3">
-            {
-              pokemonItem.types.map((item, index) => (
-                <li key={index} className="text-center bg-white grid bg-opacity-30 px-3 rounded-customCard font-normal">
-                  <small>{item.type.name}</small>
-                </li>
-              ))
-            }
-          </ul>
-          <img loading="lazy" className="w-24 mr-[-10px]" src={pokemonItem.image} alt={pokemonItem.name} />
+    <Link to={`/pokemon/${pokemonItem.name}`}>
+      <Card key={pokemonItem.id} color={currentColor} height="h-36">
+        <Pokeball type="white" />
+        <div className="relative">
+          <small className="block -mb-2 text-right opacity-50">{pokemonItem.code}</small>
+          <h4 className="text-lg capitalize">{pokemonItem.name}</h4>
+          <div className="flex justify-between items-center">
+            <ul className="grid gap-3">
+              {
+                pokemonItem.types.map((item, index) => (
+                  <Tag key={index} item={item} />
+                ))
+              }
+            </ul>
+            <img loading="lazy" className="h-24 mr-[-10px]" src={pokemonItem.image} alt={pokemonItem.name} />
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </Link>
   )
 }

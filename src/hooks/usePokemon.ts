@@ -1,17 +1,24 @@
 import { getPokemonByIdApi } from '../requests/pokemon'
-import { PokemonObject } from '../interfaces/pokemon'
+import { PokemonObject, PokemonAbility } from '../interfaces/pokemon'
 
 export const usePokemon = () => {
-  const getPokemonById = async(id: number) => {
+  const getPokemonById = async(id: number | string) => {
     try {
       const response = await getPokemonByIdApi(id)
       const result = await response.json()
+      const abilitiesRaw = result.abilities
+      const abilitiesFormat = abilitiesRaw.map((item: PokemonAbility) => {
+        return { name: item.ability.name, url: item.ability.url }
+      })
       const pokemon: PokemonObject = {
         id,
-        code: `${id < 10 ? '#00' : id < 100 ? '#0' : '#'}${id}`,
+        code: `${id < 10 ? '#00' : id < 100 ? '#0' : '#'}${result.order}`,
         name: result.name,
         types: [...result.types],
-        image: result.sprites.other['official-artwork']['front_default']
+        image: result.sprites.other['official-artwork']['front_default'],
+        weight: result.weight,
+        species: result.species,
+        abilities: abilitiesFormat
       }
       return pokemon
     } catch (error) {

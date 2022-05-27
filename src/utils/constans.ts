@@ -1,6 +1,16 @@
 export const BASE_URL = 'https://pokeapi.co/api/v2'
 export const PER_PAGE = 20
 export const POKEMON_TOTAL = 1126
+export const POKEMON_OBJECT = {
+  id: '',
+  code: '',
+  name: '',
+  types: [{ slot: 0, type: { name: 'grass', url: '' }}],
+  image: '',
+  weight: 0,
+  species: { name: '', url:'' },
+  abilities: [{ name: '', url: '' }]
+}
 export const POKEMON_TYPE = {
   grass: 'bg-customGreen',
   fire: 'bg-customRed',

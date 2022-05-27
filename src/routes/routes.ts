@@ -1,5 +1,5 @@
-import { DefaultLayout } from '../layouts'
-import { Home, Pokemon } from '../pages'
+import { DefaultLayout, DetailLayout } from '../layouts'
+import { Home, Pokemon, PokemonDetail } from '../pages'
 
 interface RoutesState {
   path: string
@@ -17,6 +17,11 @@ const routes: Array<RoutesState> = [
     path: '/pokemon',
     layout: DefaultLayout,
     component: Pokemon
+  },
+  {
+    path: '/pokemon/:namePokemon',
+    layout: DetailLayout,
+    component: PokemonDetail
   },
 
 ]

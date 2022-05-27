@@ -16,7 +16,7 @@ export const Pokeball = (props: PokeballProps) => {
       src={type !== 'white' ? PokeballImage : PokeballWhiteImage}
       alt="Pokeball"
       className={
-        `${opacity || 'opacity-40'} ${height || 'h-28'} ${position || 'absolute'} ${inset || 'bottom-[-15px] right-[-30px] z-0 group-hover:animate-spinSlow'}`
+        `${opacity || 'opacity-40'} ${height || 'h-28'} ${position || 'absolute'} ${inset || 'bottom-[-15px] right-[-30px] z-0'} group-hover:animate-spinSlow`
       }
     />
   )

@@ -12,10 +12,20 @@ export const usePokemonContext = () => useContext(Pokemon);
 const PokemonProvider = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
 
+  const [pokemonItem, setPokemonItem] = useState<PokemonObject>({
+    id: '',
+    code: '',
+    name: '',
+    types: [{ slot: 0, type: { name: 'grass', url: '' }}],
+    image: '',
+    weight: 0,
+    species: { name: '', url:'' },
+    abilities: [{ name: '', url: '' }]
+  })
   const [pokemonList, setPokemonList] = useState<Array<PokemonObject>>([])
   const [isLoading, setIsLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const { getPokemonList } = usePokemon()
+  const { getPokemonList, getPokemonById } = usePokemon()
 
   const handleGetPokemonList = async () => {
     try {
@@ -24,6 +34,18 @@ const PokemonProvider = ({ children }: { children: ReactNode }) => {
       setPokemonList([...pokemon])
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleGetPokemonById = async (id: number | string) => {
+    try {
+      setIsLoading(true)
+      const pokemon = await getPokemonById(id)
+      setPokemonItem({...pokemon})
+    } catch (error) {
+      console.log(error)
     } finally {
       setIsLoading(false)
     }
@@ -41,8 +63,10 @@ const PokemonProvider = ({ children }: { children: ReactNode }) => {
     <Pokemon.Provider
       value={{
         isLoading,
+        pokemonItem,
         pokemonList,
         handleGetPokemonList,
+        handleGetPokemonById,
         handleChangePage
       }}
     >
