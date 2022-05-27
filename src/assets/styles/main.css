@@ -1,0 +1,8 @@
+@import url('./tailwind.css');
+
+*::-webkit-scrollbar {
+  display: none;
+}
+* {
+  scrollbar-width: none;
+}
