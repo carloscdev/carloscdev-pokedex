@@ -28,13 +28,13 @@ export const PokemonItem = (props: PokemonItemProps) => {
           <ul className="grid gap-3">
             {
               pokemonItem.types.map((item, index) => (
-                <li key={index} className="bg-white grid bg-opacity-30 px-3 rounded-customCard font-normal">
+                <li key={index} className="text-center bg-white grid bg-opacity-30 px-3 rounded-customCard font-normal">
                   <small>{item.type.name}</small>
                 </li>
               ))
             }
           </ul>
-          <img className="w-28 mr-[-15px]" src={pokemonItem.image} alt={pokemonItem.name} />
+          <img loading="lazy" className="w-24 mr-[-10px]" src={pokemonItem.image} alt={pokemonItem.name} />
         </div>
       </div>
     </Card>

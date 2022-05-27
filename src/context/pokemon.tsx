@@ -13,12 +13,20 @@ const PokemonProvider = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
 
   const [pokemonList, setPokemonList] = useState<Array<PokemonObject>>([])
+  const [isLoading, setIsLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const { getPokemonList } = usePokemon()
 
   const handleGetPokemonList = async () => {
-    const pokemon = await getPokemonList(PER_PAGE, currentPage)
-    setPokemonList([...pokemon])
+    try {
+      setIsLoading(true)
+      const pokemon = await getPokemonList(PER_PAGE, currentPage)
+      setPokemonList([...pokemon])
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleChangePage = () => {
@@ -32,6 +40,7 @@ const PokemonProvider = ({ children }: { children: ReactNode }) => {
   return (
     <Pokemon.Provider
       value={{
+        isLoading,
         pokemonList,
         handleGetPokemonList,
         handleChangePage

@@ -16,6 +16,9 @@ module.exports = {
         'customYellow': '#FFCE4B',
         'customPurple': '#7C538C',
         'customBrown': '#B1736C'
+      },
+      animation: {
+        'spinSlow': 'loading 5s linear infinite'
       }
     },
   },
