@@ -18,7 +18,8 @@ module.exports = {
         'customBrown': '#B1736C'
       },
       animation: {
-        'spinSlow': 'loading 5s linear infinite'
+        'spinSlow': 'loading 5s linear infinite',
+        'fadeUp': 'fadeUp 1s ease forwards',
       }
     },
   },

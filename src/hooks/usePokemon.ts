@@ -12,7 +12,7 @@ export const usePokemon = () => {
       })
       const pokemon: PokemonObject = {
         id,
-        code: `${id < 10 ? '#00' : id < 100 ? '#0' : '#'}${result.order}`,
+        code: `${result.order < 10 ? '#00' : id < 100 ? '#0' : '#'}${result.order}`,
         name: result.name,
         types: [...result.types],
         image: result.sprites.other['official-artwork']['front_default'],

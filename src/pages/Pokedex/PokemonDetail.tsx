@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Page, PokemonHeader, Pokeball } from '../../components'
+import { Page, PokemonHeader, PokemonStats, Pokeball } from '../../components'
 import { useParams } from 'react-router-dom'
 import { usePokemonContext } from "../../context/pokemon";
 import { POKEMON_TYPE } from '../../utils/constans'
@@ -21,9 +21,10 @@ export const PokemonDetail = () => {
 
   return (
     <Page>
-      <div className={`${currentType} px-4 py-10 min-h-screen`}>
-        <Pokeball type="white" height="h-96" inset="bottom-20 right-[-100px] z-[10] animate-spinSlow" />
+      <div className={`${currentType}`}>
+        <Pokeball type="white" height="h-80" inset="top-40 right-[-80px] z-10 animate-spinSlow" />
         <PokemonHeader />
+        <PokemonStats />
       </div>
     </Page>
   )

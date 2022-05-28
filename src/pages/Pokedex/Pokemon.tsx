@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Page, Title, Pokeball, PokemonList } from '../../components'
-import BackArrow from '../../assets/images/back.png'
+import { Page, Title, Pokeball, PokemonList, BackArrow } from '../../components'
+
 import { usePokemonContext } from "../../context/pokemon";
 
 export const Pokemon = () => {
@@ -14,11 +13,7 @@ export const Pokemon = () => {
   return (
     <Page>
       <Pokeball type="gray" height="h-64" inset="top-[-130px] right-[-100px] z-[-10]" opacity="opacity-30" />
-      <nav className="flex items-center">
-        <Link to="/">
-          <img src={BackArrow} alt="Back Home"  className="h-10" />
-        </Link>
-      </nav>
+      <BackArrow type="black" to="/" />
       <Title title="Pokedex" />
       <PokemonList />
     </Page>
