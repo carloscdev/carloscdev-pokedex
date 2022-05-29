@@ -18,8 +18,29 @@ module.exports = {
         'customBrown': '#B1736C'
       },
       animation: {
-        'spinSlow': 'loading 5s linear infinite',
+        'spinSlow': 'loading 10s ease infinite',
         'fadeUp': 'fadeUp 1s ease forwards',
+        'fadeIn': 'fadeIn 2s ease forwards',
+        'bar': 'bar 2s ease forwards',
+      },
+      keyframes: {
+        'loading': {
+          'from': { transform: 'rotate(0deg)' },
+          'to': { transform: 'rotate(360deg)' }
+        },
+        'fadeUp': {
+          'from': { filter: 'alpha(opacity=0)', opacity: '0', transform: 'translateY(20%)'},
+          'to': { filter: 'alpha(opacity=100)', opacity: '1', transform: 'translateY(0)'},
+        },
+        'fadeIn': {
+          '0%': { opacity: '0' },
+          '60%': { opacity: '0' },
+          '100%': { opacity: '1' }
+        },
+        'bar': {
+          'from': { width: '0%'},
+          'to': {width: 'auto'}
+        }
       }
     },
   },

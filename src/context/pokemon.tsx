@@ -19,8 +19,19 @@ const PokemonProvider = ({ children }: { children: ReactNode }) => {
     types: [{ slot: 0, type: { name: 'grass', url: '' }}],
     image: '',
     weight: 0,
+    height: 0,
     species: { name: '', url:'' },
-    abilities: [{ name: '', url: '' }]
+    abilities: [{ name: '', url: '' }],
+    experience: 0,
+    stats: {
+      hp: 0,
+      attack: 0,
+      defense: 0,
+      specialAttack: 0,
+      specialDefense: 0,
+      speed: 0,
+      total: 0
+    }
   })
   const [pokemonList, setPokemonList] = useState<Array<PokemonObject>>([])
   const [isLoading, setIsLoading] = useState(false)

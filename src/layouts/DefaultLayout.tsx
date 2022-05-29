@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { Footer } from '../components'
 
 interface Props {
   children: ReactNode
@@ -11,6 +12,7 @@ export const DefaultLayout = ({children}: Props) => {
         <div className="relative z-50">
           {children}
         </div>
+        <Footer />
       </main>
     </div>
   )

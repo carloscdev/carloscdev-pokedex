@@ -3,6 +3,7 @@ import { Page, PokemonHeader, PokemonStats, Pokeball } from '../../components'
 import { useParams } from 'react-router-dom'
 import { usePokemonContext } from "../../context/pokemon";
 import { POKEMON_TYPE } from '../../utils/constans'
+import DotsImage from '../../assets/images/dots.png'
 
 export const PokemonDetail = () => {
   const { handleGetPokemonById, pokemonItem } = usePokemonContext()
@@ -22,7 +23,8 @@ export const PokemonDetail = () => {
   return (
     <Page>
       <div className={`${currentType}`}>
-        <Pokeball type="white" height="h-80" inset="top-40 right-[-80px] z-10 animate-spinSlow" />
+        <Pokeball type="white" height="h-80" inset="top-40 right-[-40px] z-10 animate-spinSlow" />
+        <img src={DotsImage} alt="Dots Square" className="w-40 absolute top-[-70px] right-[-66px] opacity-50" />
         <PokemonHeader />
         <PokemonStats />
       </div>

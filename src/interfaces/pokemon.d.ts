@@ -11,8 +11,21 @@ export interface PokemonObject {
   }>
   image: string,
   weight: number
+  height: number
   species: PokemonBase
   abilities: Array<PokemonBase>
+  experience: number,
+  stats: PokemonStats
+}
+
+export type PokemonStats = {
+  hp: 0,
+  attack: 0,
+  defense: 0,
+  specialAttack: 0,
+  specialDefense: 0,
+  speed: 0,
+  total: 0
 }
 
 export type PokemonBase = {
