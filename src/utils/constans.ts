@@ -1,5 +1,5 @@
 export const BASE_URL = 'https://pokeapi.co/api/v2'
-export const PER_PAGE = 100
+export const PER_PAGE = 10
 export const POKEMON_TOTAL = 1126
 export const POKEMON_OBJECT = {
   id: '',

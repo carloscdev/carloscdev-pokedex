@@ -21,10 +21,10 @@ export const PokemonDetail = () => {
   }, [pokemonItem])
 
   return (
-    <Page>
+    <Page padding="pb-12">
       <div className={`${currentType}`}>
-        <Pokeball type="white" height="h-80" inset="top-40 right-[-40px] z-10 animate-spinSlow" />
-        <img src={DotsImage} alt="Dots Square" className="w-40 absolute top-[-70px] right-[-66px] opacity-50" />
+        <Pokeball type="white" height="h-80" inset="top-52 right-[-45px] z-10 animate-spinSlow" />
+        <img src={DotsImage} alt="Dots Square" className="w-40 absolute top-[-70px] right-[-66px] opacity-30" />
         <PokemonHeader />
         <PokemonStats />
       </div>

@@ -9,7 +9,7 @@ export const PokemonStats = () => {
     <div className="bg-white px-4 pb-1 relative z-10">
       <div className="absolute left-0 right-0 -top-14 bg-white h-14 rounded-t-[50px]"></div>
       <PokemonStatsMenu currentValueMenu={currentValueMenu} setCurrentValueMenu={setCurrentValueMenu} />
-      <section className="my-10 grid gap-5">
+      <section className="mt-10 grid gap-5">
         {
           currentValueMenu === 1 ? (<PokemonStatsAbout pokemonItem={pokemonItem} />) :
           currentValueMenu === 2 ? (<PokemonStatsGraph pokemonItem={pokemonItem} />) : (<h2>Working ...</h2>)
@@ -27,26 +27,14 @@ interface PokemonStatsMenuProps {
 function PokemonStatsMenu(props: PokemonStatsMenuProps) {
   const {currentValueMenu, setCurrentValueMenu} = props
   const menuList = [
-    {
-      name: 'About',
-      value: 1
-    },
-    {
-      name: 'Base Stats',
-      value: 2
-    },
-    {
-      name: 'Evolution',
-      value: 3
-    },
-    {
-      name: 'Moves',
-      value: 4
-    },
+    { name: 'About', value: 1 },
+    { name: 'Base Stats', value: 2 },
+    { name: 'Evolution', value: 3 },
+    { name: 'Moves', value: 4 },
   ]
   return (
     <nav>
-      <ul className="flex items-center gap-3 justify-between border-b border-gray-100">
+      <ul className="flex items-center gap-3 justify-around border-b border-gray-100">
         {menuList.map((item) => (
           <li
             key={item.value}
@@ -66,48 +54,28 @@ interface PokemonStatsAboutProps {
 }
 function PokemonStatsAbout(props: PokemonStatsAboutProps) {
   const {pokemonItem} = props
+  const pokemonAbout = [
+    { title: 'Type', value: `${pokemonItem.types.map(item=>item.type.name).join(', ')}` },
+    { title: 'Height', value: `${pokemonItem.height * 10} cm` },
+    { title: 'Weight', value: `${pokemonItem.weight * 10} lbs` },
+    { title: 'Abilities', value: `${pokemonItem.abilities.map(item=>item.name).join(', ')}` },
+    { title: 'Experience', value: `${pokemonItem.experience}` }
+  ]
   return (
     <>
-      <p className="flex items-center gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          Species
-        </span>
-        <span>
-          ...
-        </span>
-      </p>
-      <p className="flex items-center gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          Height
-        </span>
-        <span>
-          {pokemonItem.height * 10} cm
-        </span>
-      </p>
-      <p className="flex items-center gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          Weight
-        </span>
-        <span>
-          {pokemonItem.weight} lbs
-        </span>
-      </p>
-      <p className="flex items-center gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          Abilities
-        </span>
-        <span className="capitalize">
-          {pokemonItem.abilities.map(item=>item.name).join(', ')}
-        </span>
-      </p>
-      <p className="flex items-center gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          Experience
-        </span>
-        <span className="capitalize">
-          {pokemonItem.experience}
-        </span>
-      </p>
+      {pokemonAbout.map((pokemon) => (
+        <p key={pokemon.title} className="grid grid-cols-[80px,10px,1fr] items-center gap-5 font-semibold animate-fadeUp">
+          <span className="opacity-30">
+            {pokemon.title}
+          </span>
+          <span className="opacity-30">
+            :
+          </span>
+          <span className="capitalize">
+            {pokemon.value}
+          </span>
+        </p>
+      ))}
     </>
   )
 
@@ -116,92 +84,31 @@ function PokemonStatsAbout(props: PokemonStatsAboutProps) {
 function PokemonStatsGraph(props: PokemonStatsAboutProps) {
   const {pokemonItem} = props
   const stats = pokemonItem.stats
+  const pokemonStats = [
+    { title: 'HP', value: stats.hp },
+    { title: 'Attack', value: stats.attack },
+    { title: 'Defense', value: stats.defense },
+    { title: 'Sp. Atk', value: stats.specialAttack },
+    { title: 'Sp. Def', value: stats.specialDefense },
+    { title: 'Speed', value: stats.speed },
+    { title: 'Total', value: stats.total / 5 }
+  ]
   return (
     <>
-      <div className="grid grid-cols-[0.3fr_0.2fr_1fr] items-center justify-between gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          HP
-        </span>
-        <span>
-          {stats.hp}
-        </span>
-        <div className="bg-gray-200 overflow-hidden rounded-lg">
-          <p className={`${stats.hp > 50 ? 'bg-customGreen' : 'bg-customRed'} h-2`} style={{width: `${stats.hp}%`}}>
-          </p>
+      {pokemonStats.map((pokemon) => (
+        <div key={pokemon.title} className="grid grid-cols-[0.3fr_0.2fr_1fr] items-center justify-between gap-8 font-semibold animate-fadeUp">
+          <span className="opacity-30 w-16">
+            {pokemon.title}
+          </span>
+          <span>
+            {pokemon.title === 'Total' ? pokemon.value * 5 : pokemon.value}
+          </span>
+          <div className="bg-gray-200 overflow-hidden rounded-lg">
+            <p className={`${pokemon.value > 50 ? 'bg-green-400' : 'bg-red-400'} h-2`} style={{width: `${pokemon.value}%`}}>
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="grid grid-cols-[0.3fr_0.2fr_1fr] items-center justify-between gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          Attack
-        </span>
-        <span>
-          {stats.attack}
-        </span>
-        <div className="bg-gray-200 overflow-hidden rounded-lg">
-          <p className={`${stats.attack > 50 ? 'bg-customGreen' : 'bg-customRed'} h-2`} style={{width: `${stats.attack}%`}}>
-          </p>
-        </div>
-      </div>
-      <div className="grid grid-cols-[0.3fr_0.2fr_1fr] items-center justify-between gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          Defense
-        </span>
-        <span>
-          {stats.defense}
-        </span>
-        <div className="bg-gray-200 overflow-hidden rounded-lg h-2">
-          <p className={`${stats.defense > 50 ? 'bg-customGreen' : 'bg-customRed'} h-2`} style={{width: `${stats.defense}%`}}>
-          </p>
-        </div>
-      </div>
-      <div className="grid grid-cols-[0.3fr_0.2fr_1fr] items-center justify-between gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          Sp. Atk
-        </span>
-        <span>
-          {stats.specialAttack}
-        </span>
-        <div className="bg-gray-200 overflow-hidden rounded-lg">
-          <p className={`${stats.specialAttack > 50 ? 'bg-customGreen' : 'bg-customRed'} h-2`} style={{width: `${stats.specialAttack}%`}}>
-          </p>
-        </div>
-      </div>
-      <div className="grid grid-cols-[0.3fr_0.2fr_1fr] items-center justify-between gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          Sp. Def
-        </span>
-        <span>
-          {stats.specialDefense}
-        </span>
-        <div className="bg-gray-200 overflow-hidden rounded-lg">
-          <p className={`${stats.specialDefense > 50 ? 'bg-customGreen' : 'bg-customRed'} h-2`} style={{width: `${stats.specialDefense}%`}}>
-          </p>
-        </div>
-      </div>
-      <div className="grid grid-cols-[0.3fr_0.2fr_1fr] items-center justify-between gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          Speed
-        </span>
-        <span>
-          {stats.speed}
-        </span>
-        <div className="bg-gray-200 overflow-hidden rounded-lg">
-          <p className={`${stats.speed > 50 ? 'bg-customGreen' : 'bg-customRed'} h-2`} style={{width: `${stats.speed}%`}}>
-          </p>
-        </div>
-      </div>
-      <div className="grid grid-cols-[0.3fr_0.2fr_1fr] items-center justify-between gap-8 font-semibold animate-fadeUp">
-        <span className="opacity-30 w-16">
-          Total
-        </span>
-        <span>
-          {stats.total}
-        </span>
-        <div className="bg-gray-200 overflow-hidden rounded-lg">
-          <p className={`${stats.total > 300 ? 'bg-customGreen' : 'bg-customRed'} h-2 transition delay-150 duration-300 ease-in-out`} style={{width: `${stats.total / 5}%`}}>
-          </p>
-        </div>
-      </div>
+      ))}
     </>
   )
 }

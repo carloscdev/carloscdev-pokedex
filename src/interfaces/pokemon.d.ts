@@ -41,6 +41,7 @@ export type PokemonType = 'grass'
 
 export interface PokemonContextProps {
   isLoading: boolean
+  currentPage: number
   pokemonItem: PokemonObject
   pokemonList: Array<PokemonObject>
   handleGetPokemonList: Function

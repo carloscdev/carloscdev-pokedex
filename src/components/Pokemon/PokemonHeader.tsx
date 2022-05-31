@@ -15,7 +15,7 @@ export const PokemonHeader = () => {
         </ul>
         <span className="font-bold text-xl">{pokemonItem.code}</span>
       </section>
-      <img src={pokemonItem.image} alt={pokemonItem.name} className="mt-6 h-60 mx-auto" />
+      <img src={pokemonItem.image} alt={pokemonItem.name} className="h-64 mx-auto" />
     </div>
   )
 }

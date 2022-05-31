@@ -1,5 +1,6 @@
 import { PokemonItem, Card, Loader } from '../'
 import { usePokemonContext } from "../../context/pokemon";
+import { PER_PAGE } from '../../utils/constans'
 
 
 export const PokemonList = () => {
@@ -16,7 +17,7 @@ export const PokemonList = () => {
 
 function LoaderPokemonList() {
   const loader = []
-  for (let i = 0; i < 11; i++) {
+  for (let i = 0; i < PER_PAGE; i++) {
     loader.push(<Loader />)
   }
   return (

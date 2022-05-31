@@ -37,16 +37,25 @@ const PokemonProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const { getPokemonList, getPokemonById } = usePokemon()
+  const [loadPokemonList, setLoadPokemonList] = useState(false)
+
+  useEffect(() => {
+    if (loadPokemonList) {
+      handleGetPokemonList()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage])
 
   const handleGetPokemonList = async () => {
     try {
       setIsLoading(true)
-      const pokemon = await getPokemonList(PER_PAGE, currentPage)
+      const pokemon = await getPokemonList(PER_PAGE * currentPage, currentPage === 1 ? currentPage : currentPage * PER_PAGE - PER_PAGE + 1)
       setPokemonList([...pokemon])
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false)
+      setLoadPokemonList(true)
     }
   }
 
@@ -62,8 +71,10 @@ const PokemonProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  const handleChangePage = () => {
-    setCurrentPage((prev) => prev++)
+  const handleChangePage = (value: number) => {
+    if (!isLoading) {
+      setCurrentPage(currentPage + value)
+    }
   }
 
   useEffect(() => {
@@ -74,6 +85,7 @@ const PokemonProvider = ({ children }: { children: ReactNode }) => {
     <Pokemon.Provider
       value={{
         isLoading,
+        currentPage,
         pokemonItem,
         pokemonList,
         handleGetPokemonList,
