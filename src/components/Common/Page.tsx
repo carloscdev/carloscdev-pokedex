@@ -8,7 +8,7 @@ interface PageProps {
 export const Page = (props: PageProps) => {
   const {children, padding} = props
   return (
-    <section className={`grid gap-10 relative ${padding}`}>
+    <section className={`flex flex-col gap-6 h-full justify-between relative ${padding}`}>
       {children}
     </section>
   )

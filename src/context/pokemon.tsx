@@ -1,8 +1,9 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { PokemonObject, PokemonContextProps } from "../interfaces/pokemon";
-import { useLocation } from "react-router-dom";
+import { PokemonContextProps, PokemonInterface } from "../interfaces/pokemon";
+import { useLocation, useNavigate } from "react-router-dom";
 import { usePokemon } from '../hooks'
 import { PER_PAGE } from '../utils/constans'
+import { Chain, PokemonEvolutionFormatedInterface } from "../interfaces/pokemonEvolution";
 
 
 const Pokemon = createContext({} as PokemonContextProps);
@@ -12,32 +13,21 @@ export const usePokemonContext = () => useContext(Pokemon);
 const PokemonProvider = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
 
-  const [pokemonItem, setPokemonItem] = useState<PokemonObject>({
-    id: '',
-    code: '',
-    name: '',
-    types: [{ slot: 0, type: { name: 'grass', url: '' }}],
-    image: '',
-    weight: 0,
-    height: 0,
-    species: { name: '', url:'' },
-    abilities: [{ name: '', url: '' }],
-    experience: 0,
-    stats: {
-      hp: 0,
-      attack: 0,
-      defense: 0,
-      specialAttack: 0,
-      specialDefense: 0,
-      speed: 0,
-      total: 0
-    }
-  })
-  const [pokemonList, setPokemonList] = useState<Array<PokemonObject>>([])
+  const [pokemonItem, setPokemonItem] = useState<PokemonInterface | null>(null)
+  const [pokemonList, setPokemonList] = useState<Array<PokemonInterface>>([])
   const [isLoading, setIsLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const { getPokemonList, getPokemonById } = usePokemon()
+  const [evolutions, setEvolutions] = useState<PokemonEvolutionFormatedInterface[]>([
+    {
+      id: 0,
+      name: '',
+      type: 'normal'
+    }
+  ])
+  const { getPokemonList, getPokemonById, getPokemonEvolutions } = usePokemon()
   const [loadPokemonList, setLoadPokemonList] = useState(false)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (loadPokemonList) {
@@ -59,21 +49,70 @@ const PokemonProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  const handleGetPokemonById = async (id: number | string) => {
+  const handleGetPokemonEvolutions = async (id: number | string) => {
     try {
-      setIsLoading(true)
-      const pokemon = await getPokemonById(id)
-      setPokemonItem({...pokemon})
+      const evolutions = await getPokemonEvolutions(id)
+      const parseEvolutionChain = (chain: any, type = 'pre-evolution') => {
+        const formatted: PokemonEvolutionFormatedInterface[] = [];
+        if (!chain) return formatted;
+
+        // Obtener el ID del Pokémon
+        const pokemonId = chain.species.url.split('/')[6];
+
+        // Agregar el Pokémon actual al array
+        formatted.push({
+          id: pokemonId,
+          name: chain.species.name,
+          type: type,
+        });
+
+        // Procesar las evoluciones siguientes
+        chain.evolves_to.forEach((evolution: Chain) => {
+          const nextType = evolution.evolves_to.length > 0 ? 'normal' : 'evolution';
+          formatted.push(...parseEvolutionChain(evolution, nextType));
+        });
+        return formatted;
+      };
+      const formattedEvolutions = parseEvolutionChain(evolutions.chain);
+      setEvolutions([...formattedEvolutions]);
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  const clearPokemonItem = () => {
+    setPokemonItem(null)
+  }
+
+  const handleGetPokemonById = async (id: number | string, loading: boolean) => {
+    try {
+      if (loading) {
+        setIsLoading(true)
+      }
+      const pokemon = await getPokemonById(id)
+      setPokemonItem({...pokemon})
+      return true
+    } catch (error) {
+      console.log(error)
+      navigate('/pokedex')
     } finally {
       setIsLoading(false)
     }
   }
 
+  const handleSetPokemonDetail = (pokemon: PokemonInterface) => {
+    setPokemonItem({...pokemon})
+  }
+
   const handleChangePage = (value: number) => {
     if (!isLoading) {
       setCurrentPage(currentPage + value)
+    }
+  }
+
+  const handleGoToPage = (page: number) => {
+    if (!isLoading) {
+      setCurrentPage(page)
     }
   }
 
@@ -88,9 +127,14 @@ const PokemonProvider = ({ children }: { children: ReactNode }) => {
         currentPage,
         pokemonItem,
         pokemonList,
+        evolutions,
+        clearPokemonItem,
         handleGetPokemonList,
         handleGetPokemonById,
-        handleChangePage
+        handleChangePage,
+        handleSetPokemonDetail,
+        handleGoToPage,
+        handleGetPokemonEvolutions
       }}
     >
       {children}

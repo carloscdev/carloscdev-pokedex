@@ -15,7 +15,7 @@ interface MenuListState {
 const INITIAL_STATE = [
   {
     name: 'Pokedex',
-    path: '/pokemon',
+    path: '/pokedex',
     color: 'bg-customGreen',
     disabled: false
   },

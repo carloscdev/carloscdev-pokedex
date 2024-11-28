@@ -2,9 +2,7 @@ import { Navigation } from './routes'
 
 function App() {
   return (
-    <>
-      <Navigation />
-    </>
+    <Navigation />
   );
 }
 

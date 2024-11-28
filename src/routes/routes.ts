@@ -14,12 +14,12 @@ const routes: Array<RoutesState> = [
     component: Home
   },
   {
-    path: '/pokemon',
+    path: '/pokedex',
     layout: DefaultLayout,
     component: Pokemon
   },
   {
-    path: '/pokemon/:namePokemon',
+    path: '/pokedex/:namePokemon',
     layout: DefaultLayout,
     component: PokemonDetail
   },

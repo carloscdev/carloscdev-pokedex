@@ -9,7 +9,7 @@ export const PokemonList = () => {
     <ul className="grid grid-cols-2 gap-3">
       {isLoading ? (<LoaderPokemonList />) :
         pokemonList.map((pokemon) => (
-          <PokemonItem key={pokemon.code} pokemonItem={pokemon} />
+          <PokemonItem key={pokemon.id} pokemonItem={pokemon} />
         ))}
     </ul>
   )

@@ -14,3 +14,33 @@ html {
 button[disabled] {
   opacity: 0.5;
 }
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(100%); /* Empieza fuera de la pantalla a la derecha */
+    opacity: 0; /* Empieza invisible */
+  }
+  to {
+    transform: translateX(0); /* Termina en su posición original */
+    opacity: 1; /* Se hace visible */
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(-100%); /* Empieza fuera de la pantalla a la izquierda */
+    opacity: 0; /* Empieza invisible */
+  }
+  to {
+    transform: translateX(0); /* Termina en su posición original */
+    opacity: 1; /* Se hace visible */
+  }
+}
+
+.slide-left {
+  animation: slideInLeft 0.3s ease-out forwards;
+}
+
+.slide-right {
+  animation: slideInRight 0.3s ease-out forwards;
+}

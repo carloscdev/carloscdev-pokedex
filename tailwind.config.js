@@ -15,13 +15,16 @@ module.exports = {
         'customBlue': '#58AAF6',
         'customYellow': '#FFCE4B',
         'customPurple': '#7C538C',
-        'customBrown': '#B1736C'
+        'customBrown': '#B1736C',
+        'customBlack': '#282828'
       },
       animation: {
         'spinSlow': 'loading 10s ease infinite',
         'fadeUp': 'fadeUp 1s ease forwards',
-        'fadeIn': 'fadeIn 2s ease forwards',
+        'fadeIn': 'fadeIn 1s ease forwards',
         'bar': 'bar 2s ease forwards',
+        'slideLeft': 'slideLeft 1s ease forwards',
+        'slideRight': 'slideRight 1s ease forwards',
       },
       keyframes: {
         'loading': {
@@ -40,6 +43,14 @@ module.exports = {
         'bar': {
           'from': { width: '0%'},
           'to': {width: 'auto'}
+        },
+        'slideLeft': {
+          'from': { transform: 'translateX(100%)'},
+          'to': { transform: 'translateX(0)'}
+        },
+        'slideRight': {
+          'from': { transform: 'translateX(-100%)'},
+          'to': { transform: 'translateX(0)'}
         }
       }
     },
